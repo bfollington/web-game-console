@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>~</title>
+    <style>
+     #foo {
+         position: absolute;
+         left: 0;
+         right: 0;
+         top: 0;
+         bottom: 0;
+     }
+    </style>
+  </head>
+  <body>
+    <h1>Hello World!</h1>
+    We are using node.js <script>document.write(process.version)</script>.
+  <br />
+    <script>document.write(nw.App.argv)</script>.
+
+    <!-- <webview id="foo" src="https://v6p9d9t4.ssl.hwcdn.net/html/5512745/index.html" ></webview> -->
+    <!-- <webview id="foo" src="https://v6p9d9t4.ssl.hwcdn.net/html/5590809/Die in the Dungeon 1.5.1 [WEB]/index.html" ></webview> -->
+
+    <script>
+     const GAME_CART = {
+         title: '1881',
+         url: 'https://v6p9d9t4.ssl.hwcdn.net/html/3574492/index.html'
+     }
+
+     const GAMES = [
+        {
+            title: '1881',
+            url: 'https://v6p9d9t4.ssl.hwcdn.net/html/3574492/index.html',
+            res: {
+              w: 800,
+              h: 800,
+            }
+        },
+        {
+            title: 'FROGUE',
+            url: 'https://v6p9d9t4.ssl.hwcdn.net/html/3457414-370385/dist/index.html',
+            res: {
+              w: 960,
+              h: 540,
+            }
+        },
+        {
+            title: 'Tiny Islands',
+            url: 'https://v6p9d9t4.ssl.hwcdn.net/html/3140171/TinyIslands_RuleTweak_v14/index.html',
+            res: {
+              w: 975,
+              h: 555,
+            }
+        },
+        {
+            title: 'Olden Peak',
+            url: 'https://v6p9d9t4.ssl.hwcdn.net/html/5594705/Web/index.html',
+            res: {
+              w: 800,
+              h: 800,
+            }
+        },
+        {
+            title: 'Symbiosis',
+            url: 'https://v6p9d9t4.ssl.hwcdn.net/html/5545766/www/index.html',
+            res: {
+              w: 816,
+              h: 624,
+            }
+        },
+        {
+            title: 'Space Station',
+            url: 'https://v6p9d9t4.ssl.hwcdn.net/html/5613823/Web/index.html',
+            res: {
+              w: 1280,
+              h: 720,
+            }
+        },
+        {
+            title: 'Grid Blocked',
+            url: 'https://v6p9d9t4.ssl.hwcdn.net/html/5211625/index.html',
+            res: {
+              w: 800,
+              h: 600,
+            }
+        },
+        {
+            title: 'Unearthed',
+            url: 'https://v6p9d9t4.ssl.hwcdn.net/html/4630107/index.html',
+            res: {
+              w: 480,
+              h: 432,
+            }
+        },
+        {
+            title: 'Silver Thread',
+            url: 'https://v6p9d9t4.ssl.hwcdn.net/html/4536093/www/index.html',
+            res: {
+              w: 816,
+              h: 624,
+            }
+        },
+        {
+            title: 'Roulette Knight',
+            url: 'https://v6p9d9t4.ssl.hwcdn.net/html/890491/index.html?v=1542781941',
+            res: {
+              w: 1216,
+              h: 684,
+            }
+        },
+        {
+            title: 'Goodbye Doggy',
+            url: 'https://v6p9d9t4.ssl.hwcdn.net/html/1249714/index.html?v=1574336082',
+            res: {
+              w: 960,
+              h: 640,
+            }
+        },
+        {
+            title: 'bunny bye bye',
+            url: 'https://v6p9d9t4.ssl.hwcdn.net/html/5460495/index.html',
+            res: {
+              w: 854,
+              h: 480,
+            }
+        },
+     ]
+
+     const RESOLUTIONS = [
+         { w: 128, h: 128 },
+         { w: 256, h: 256 },
+         { w: 320, h: 240 },
+         { w: 512, h: 512 },
+         { w: 640, h: 480 },
+         { w: 800, h: 600 },
+         { w: 1024, h: 1024 },
+         { w: 1280, h: 720 },
+         { w: 1920, h: 1080 },
+     ]
+
+     window.document.title = GAME_CART.title;
+     // Extend application menu for Mac OS
+      var menu = new nw.Menu({type: "menubar"});
+      menu.createMacBuiltin && menu.createMacBuiltin(window.document.title);
+      var size = new nw.Menu();
+      RESOLUTIONS.forEach(res => {
+          size.append(new nw.MenuItem({ label: `${res.w}x${res.h}`, click: function() { nw.Window.get().resizeTo(res.w, res.h); } }));
+      });
+
+     menu.items[2].submenu.append(new nw.MenuItem({ label: 'Size', submenu: size }));
+     menu.items[2].submenu.append(new nw.MenuItem({ label: 'Fullscreen', click: function() { nw.Window.get().toggleFullscreen(); } }))
+
+     var games = new nw.Menu();
+     GAMES.forEach(g => {
+         games.append(new nw.MenuItem({
+             label: `${g.title}`,
+             click: function() {
+                 window.document.title = g.title;
+                 window.document.querySelector('#foo').src = g.url;
+                 if (g.res) {
+                  nw.Window.get().resizeTo(g.res.w, g.res.h);
+                 }
+             }
+         }));
+     });
+
+     menu.append(new nw.MenuItem({ label: "Game", submenu: games }));
+
+     nw.Window.get().menu = menu;
+
+     document.write(`<webview id="foo" src="${GAME_CART.url}"></webview>`)
+    </script>
+  </body>
+</html>
